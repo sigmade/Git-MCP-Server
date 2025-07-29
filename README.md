@@ -1,41 +1,41 @@
 # Simple Merge Review MCP
 
-Максимально простой MCP сервер для быстрого анализа Git merge операций. Показывает только нужную информацию без сложных проверок конфликтов.
+A lightweight MCP server for quick Git merge analysis. Shows only essential information without complex conflict checks.
 
-## 🚀 Возможности
+## 🚀 Features
 
-- **Быстрая сводка merge** - основная статистика изменений
-- **Список измененных файлов** - что будет затронуто при merge
-- **Простая статистика** - количество коммитов, строк, файлов
+- **Quick Merge Overview** - core change statistics
+- **Changed Files List** - what will be affected by merge
+- **Simple Statistics** - number of commits, lines, files
 
-## 📦 Установка
+## 📦 Installation
 
 ```bash
-# Клонируйте репозиторий
+# Clone the repository
 git clone <repository-url>
 cd local-merge-review-mcp
 
-# Установите зависимости
+# Install dependencies
 npm install
 
-# Соберите проект
+# Build the project
 npm run build
 ```
 
-## 🛠️ Всего 2 простых инструмента
+## 🛠️ Just 2 Simple Tools
 
 ### 1. `show_merge_diff`
-Показать изменения между ветками перед merge.
+Show changes between branches before merge.
 
 ```javascript
 await mcp.call_tool("show_merge_diff", {
   repoPath: "/path/to/your/repo",
-  fromBranch: "main", // опционально, по умолчанию main
-  toBranch: "feature/new-feature" // опционально, по умолчанию текущая
+  fromBranch: "main", // optional, defaults to main
+  toBranch: "feature/new-feature" // optional, defaults to current
 });
 ```
 
-**Результат:**
+**Result:**
 ```json
 {
   "sourceBranch": "main",
@@ -44,79 +44,79 @@ await mcp.call_tool("show_merge_diff", {
   "insertions": 45,
   "deletions": 12,
   "commits": 3,
-  "summary": "3 коммитов, 3 файлов, +45/-12 строк"
+  "summary": "3 commits, 3 files, +45/-12 lines"
 }
 ```
 
 ### 2. `quick_merge_summary`
-Быстрая сводка изменений для merge.
+Quick merge change summary.
 
 ```javascript
 await mcp.call_tool("quick_merge_summary", {
   repoPath: "/path/to/your/repo",
-  branch: "feature/auth" // опционально, по умолчанию текущая
+  branch: "feature/auth" // optional, defaults to current
 });
 ```
 
-**Результат:**
+**Result:**
 ```json
 {
   "currentBranch": "feature/auth",
   "baseBranch": "main",
-  "message": "Опережает на 5 коммитов",
+  "message": "5 commits ahead",
   "aheadBy": 5,
   "behindBy": 0,
   "needsMerge": true
 }
 ```
 
-## 📋 Простые сценарии
+## 📋 Common Use Cases
 
-### Быстрая проверка перед merge
+### Quick Pre-merge Check
 ```bash
-"Покажи что изменилось в ветке feature/payment по сравнению с main"
+"Show changes in feature/payment branch compared to main"
 # show_merge_diff
 ```
 
-### Проверка статуса ветки  
+### Branch Status Check
 ```bash
-"Сколько коммитов впереди текущая ветка?"
+"How many commits ahead is the current branch?"
 # quick_merge_summary
 ```
 
-### Понимание объема изменений
+### Understanding Change Scope
 ```bash
-"Сколько файлов изменится при merge этой ветки?"
-# show_merge_diff + анализ списка файлов
+"How many files will change after merging this branch?"
+# show_merge_diff + file list analysis
 ```
 
-## 📝 Пример использования в Claude
+## 📝 Usage with Claude Example
 
 ```
-"Покажи изменения между main и feature/auth в /home/user/myproject"
+"Show changes between main and feature/auth in /home/user/myproject"
 
-"Сколько коммитов впереди текущая ветка от main?"
+"How many commits ahead is current branch from main?"
 
-"Какие файлы изменятся при merge?"
+"Which files will change after merge?"
 ```
 
-## ⚡ Почему простой лучше
+## ⚡ Why Simple is Better
 
-- **Быстро** - нет сложных проверок конфликтов
-- **Понятно** - только нужная информация  
-- **Надежно** - минимум зависимостей
-- **Практично** - покрывает 90% случаев использования
+- **Fast** - no complex conflict checks
+- **Clear** - only essential information
+- **Reliable** - minimal dependencies
+- **Practical** - covers 90% of use cases
 
-По умолчанию конфликтов не будет, поэтому сложные проверки не нужны. Этот MCP показывает только то, что действительно важно знать перед merge.
+By default, conflicts are not expected, so complex checks are unnecessary. This MCP shows only what's truly important before merging.
 
-## ⚠️ Требования
+## ⚠️ Requirements
 
-- **Git** установлен и доступен в PATH
+- **Git** installed and available in PATH
 - **Node.js** >= 18.0.0
 
-## 🚧 Можно легко добавить
+## 🚧 Easy to Add Features
 
-- Форматирование для конкретных файлов (.js, .py, etc)
-- Интеграция с package.json для версий
-- Простые метрики (строк кода, комментариев)
-- Экспорт в разные форматы
+- Format handling for specific files (.js, .py, etc)
+- Package.json version integration
+- Basic metrics (lines of code, comments)
+- Export to various formats
